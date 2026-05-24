@@ -1,0 +1,29 @@
+coco_root: data/coco
+seed: 42
+dtype: bf16
+device_map: auto
+
+models:
+  - Qwen/Qwen3-VL-2B-Instruct
+  - Qwen/Qwen3-VL-4B-Instruct
+
+generation:
+  max_new_tokens_objects: 128
+  max_new_tokens_classification: 16
+  temperature: 0.0
+  do_sample: false
+
+calibration:
+  split: train2017
+  limit: 1000
+
+evaluation:
+  split: val2017
+  limit: 500
+
+asd:
+  layers: [12, 16, 20, 24]
+  lambda_strengths: [0.5, 1.0, 2.0]
+  alphas: [0.5, 1.0, 2.0]
+  vector_direction: factual_minus_hallucinated
+  intervene_position: last_token
